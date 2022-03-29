@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -18,7 +18,7 @@ RUN set -ex; \
         bash \
         net-tools \
         novnc \
-        xfce4 \
+#         xfce4 \
 	socat \
         x11vnc \
 	xvfb \
@@ -51,7 +51,7 @@ RUN set -ex; \
     && rm -rf /var/lib/apt/lists/*
 RUN dpkg-reconfigure locales
 
-RUN sudo apt-get update && sudo apt-get install -y obs-studio
+# RUN sudo apt-get update && sudo apt-get install -y obs-studio
 
 COPY . /app
 RUN chmod +x /app/conf.d/websockify.sh
@@ -86,7 +86,7 @@ RUN export UNAME=$UNAME UID=1000 GID=1000 && \
     chown ${UID}:${GID} -R /home/${UNAME} && \
     gpasswd -a ${UNAME} audio
 
-RUN echo xfce4-session >~/.xsession
-RUN echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" 
+# RUN echo xfce4-session >~/.xsession
+# RUN echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" 
 
 CMD ["/app/run.sh"]
